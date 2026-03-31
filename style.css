@@ -31,13 +31,12 @@ body{
 }
 
 .main-content{
-    
     background-color: #2a2a2a;
     border: 1px solid #3a3a3a;
     border-radius: 16px;
-    padding-left: 40px;
-    padding-right: 40px;
-    padding-top: 40px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Profile section*/
@@ -458,14 +457,15 @@ nav a:hover{
 }
 
 /* Footer*/
-.copyright{
+   .copyright{
+    max-width: 1200px;
+    margin: 50px auto 20px auto;
     text-align: center;
     color: #e0e0e0;
-    margin-top: 50px;
-    margin-bottom: 10px;
-    border-top: 2px solid black;
-    padding-top: 15px;
+    padding: 20px 0;
+    border-top: 1px solid #3a3a3a;
 }
+
 
 
 
