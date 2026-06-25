@@ -21,6 +21,7 @@
   "homepage": "https://github.com/theayushcode/My_portfolio#readme",
   "dependencies": {
     "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "mysql2": "^3.22.5",
     "nodemailer": "^9.0.1"
