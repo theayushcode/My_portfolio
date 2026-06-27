@@ -18,7 +18,7 @@ const transporter = nodemailer.createTransport({
     secure: false, 
     auth: {
         user: "b02dce001@smtp-brevo.com", 
-        pass: process.env.EMAIL_PASS // Wapas env variable kar diya
+        pass: process.env.EMAIL_PASS // Yeh Render ke dashboard se connect karega
     }
 });
 
