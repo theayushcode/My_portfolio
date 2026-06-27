@@ -48,15 +48,6 @@ A passionate Computer Science Engineering student from Bihar, India, dedicated t
 
 ---
 
-### 🎯 Featured Projects
-
-📂 **[Scientific Calculator](https://github.com/theayushcode)**
-> A feature-rich web application built to perform complex mathematical, scientific, and engineering calculations (Trigonometric, Logarithmic, and Exponential functions). Focuses on clean UI and precise state logic.
-
-🔍 *Explore all my repositories and contributions [here](https://github.com/theayushcode?tab=repositories).*
-
----
-
 
 ### 🤝 Let's Connect!
 
@@ -64,7 +55,3 @@ A passionate Computer Science Engineering student from Bihar, India, dedicated t
 
 
 <br />
-
-<p align="center">
-  <i>"Code is like humor. When you have to explain it, it’s bad."</i>
-</p>
