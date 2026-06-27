@@ -2,7 +2,6 @@ require("dotenv").config();
 
 console.log(process.env.EMAIL_USER);
 
-
 const express = require("express");
 const cors = require("cors");
 const nodemailer = require("nodemailer");
@@ -12,8 +11,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// PORT 587 WALA NAYA CONFIGURATION YAHAN HAI
 const transporter = nodemailer.createTransport({
-    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false, // Port 587 ke liye hamesha false rahega
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS
@@ -21,11 +23,9 @@ const transporter = nodemailer.createTransport({
 });
 
 app.post("/contact", async (req, res) => {
-
     const { name, email, message } = req.body;
 
     try {
-
         await transporter.sendMail({
             from: process.env.EMAIL_USER,
             to: process.env.EMAIL_USER,
@@ -45,9 +45,7 @@ app.post("/contact", async (req, res) => {
         });
 
     } catch (error) {
-
         console.log(error);
-
         res.status(500).json({
             success: false,
             message: "Email Sending Failed"
