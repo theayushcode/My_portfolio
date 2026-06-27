@@ -11,14 +11,14 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// PORT 587 WALA NAYA CONFIGURATION YAHAN HAI
+// PORT 587 WALA CONFIGURATION WITH BREVO
 const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
+    host: "smtp-relay.brevo.com",
     port: 587,
-    secure: false, // Port 587 ke liye hamesha false rahega
+    secure: false, // TLS ke liye false rahega
     auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
+        user: "b02dce001@smtp-brevo.com", 
+        pass: "xsmtpsib-9f20e3d6e2fa0d6ad16b1e83a042b9dc36a2f153cb8679bea613e48f0f7cdf7b-foWQpkTWIQWvwCQm"
     }
 });
 
@@ -27,8 +27,9 @@ app.post("/contact", async (req, res) => {
 
     try {
         await transporter.sendMail({
-            from: process.env.EMAIL_USER,
-            to: process.env.EMAIL_USER,
+            // SAHI SENDER AUR RECEIVER DETAILS HERE
+            from: "narayan.ayush0701@gmail.com", 
+            to: "narayan.ayush0701@gmail.com", 
             subject: `Portfolio Contact From ${name}`,
             html: `
                 <h2>New Message</h2>
