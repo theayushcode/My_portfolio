@@ -15,10 +15,10 @@ app.use(express.json());
 const transporter = nodemailer.createTransport({
     host: "smtp-relay.brevo.com",
     port: 587,
-    secure: false, // TLS ke liye false rahega
+    secure: false, 
     auth: {
         user: "b02dce001@smtp-brevo.com", 
-        pass: "xsmtpsib-9f20e3d6e2fa0d6ad16b1e83a042b9dc36a2f153cb8679bea613e48f0f7cdf7b-foWQpkTWIQWvwCQm"
+        pass: process.env.EMAIL_PASS // Wapas env variable kar diya
     }
 });
 
