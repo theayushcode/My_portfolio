@@ -1,44 +1,44 @@
 require("dotenv").config();
 
-console.log(process.env.EMAIL_USER);
-
 const express = require("express");
 const cors = require("cors");
-const nodemailer = require("nodemailer");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-// PORT 587 WALA CONFIGURATION WITH BREVO
-const transporter = nodemailer.createTransport({
-    host: "smtp-relay.brevo.com",
-    port: 587,
-    secure: false, 
-    auth: {
-        user: "b02dce001@smtp-brevo.com", 
-        pass: process.env.EMAIL_PASS // Yeh Render ke dashboard se connect karega
-    }
-});
-
 app.post("/contact", async (req, res) => {
     const { name, email, message } = req.body;
 
     try {
-        await transporter.sendMail({
-            // SAHI SENDER AUR RECEIVER DETAILS HERE
-            from: "narayan.ayush0701@gmail.com", 
-            to: "narayan.ayush0701@gmail.com", 
-            subject: `Portfolio Contact From ${name}`,
-            html: `
-                <h2>New Message</h2>
-                <p><b>Name:</b> ${name}</p>
-                <p><b>Email:</b> ${email}</p>
-                <p><b>Message:</b></p>
-                <p>${message}</p>
-            `
+        // Brevo ki Transactional Email API ko direct hit karenge (Yeh kabhi block nahi hoti)
+        const response = await fetch("https://api.brevo.com/v3/smtp/email", {
+            method: "POST",
+            headers: {
+                "accept": "application/json",
+                "api-key": process.env.EMAIL_PASS, // Aapki Brevo ki key yahan kaam karegi
+                "content-type": "application/json"
+            },
+            body: JSON.stringify({
+                sender: { name: "Portfolio", email: "narayan.ayush0701@gmail.com" },
+                to: [{ email: "narayan.ayush0701@gmail.com", name: "Ayush" }],
+                subject: `Portfolio Contact From ${name}`,
+                htmlContent: `
+                    <h2>New Message</h2>
+                    <p><b>Name:</b> ${name}</p>
+                    <p><b>Email:</b> ${email}</p>
+                    <p><b>Message:</b></p>
+                    <p>${message}</p>
+                `
+            })
         });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.log("Brevo API Error:", errorData);
+            throw new Error("API response was not ok");
+        }
 
         res.json({
             success: true,
