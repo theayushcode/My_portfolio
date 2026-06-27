@@ -3,7 +3,7 @@
 <div align="center">
 
 # 👋 Hi, I'm Ayush Narayan
-### 🚀 Frontend Developer | Tech Enthusiast | CSE Student
+### 🚀 Frontend Developer 
 
 A passionate Computer Science Engineering student from Bihar, India, dedicated to building beautiful, responsive, and user-centric web applications.
 
@@ -57,14 +57,6 @@ A passionate Computer Science Engineering student from Bihar, India, dedicated t
 
 ---
 
-### 📈 GitHub Analytics
-
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=theayushcode&show_icons=true&theme=tokyonight&count_private=true" alt="Ayush's GitHub stats" width="48%" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=theayushcode&layout=compact&theme=tokyonight" alt="Top Langs" width="48%" />
-</p>
-
----
 
 ### 🤝 Let's Connect!
 
