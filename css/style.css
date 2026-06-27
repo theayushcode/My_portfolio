@@ -600,3 +600,49 @@ button{
   }
 
 }
+
+/* Contact me form formatting */
+#contact {
+    position: relative;
+    z-index: 10; /* Taaki ye section hamesha upar rahe aur click ho sake */
+    padding: 40px 20px;
+    width: 100%;
+}
+
+form {
+    max-width: 700px;
+    margin: auto;
+}
+
+form input,
+form textarea {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 10px;
+    background: #1e293b;
+    color: white;
+}
+
+form textarea {
+    height: 150px;
+    resize: none;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    background: #38bdf8;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+    z-index: 20;
+}
+
+button[type="submit"]:hover {
+    background: #0ea5e9;
+}
