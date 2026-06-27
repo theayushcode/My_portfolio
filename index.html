@@ -284,20 +284,12 @@
     <h2 class="heading"><center>Contact Me</center></h2>
 
    <form id="contactForm">
-
     <input type="text" name="name" placeholder="Your Name" required>
-
     <input type="email" name="email" placeholder="Your Email" required>
-
     <textarea name="message" placeholder="Message"></textarea>
-
-    <button type="submit">
-        Send Message
-    </button>
-
+    <button type="submit">Send Message</button>
 </form>
     </section>
-
             <!--Footer-->
             <footer class="copyright">
                 &copy; 2026 Portfolio | All Rights Reserved <br>
@@ -311,35 +303,42 @@
         
 <!--javascript-->
 <script>
+    document.getElementById("contactForm").addEventListener("submit", async function(e) {
+        // Page ko refresh hone se rokne ke liye
+        e.preventDefault(); 
 
-     try {
-    const response = await fetch(
-        "https://portfolio-backend-nln8.onrender.com/contact",
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(formData)
+        const formData = {
+            name: this.name.value,
+            email: this.email.value,
+            message: this.message.value
+        };
+
+        try {
+            const response = await fetch(
+                "https://portfolio-backend-nln8.onrender.com/contact",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(formData)
+                }
+            );
+
+            const result = await response.json();
+
+            if (response.ok && result.success) {
+                alert(result.message); 
+                this.reset();
+            } else {
+                alert("Server Error: " + (result.message || "Email Sending Failed"));
+            }
+
+        } catch (error) {
+            console.error("Network Error:", error);
+            alert("Network Error: Backend se connect nahi ho pa raha hai.");
         }
-    );
-
-    const result = await response.json();
-
-    if (response.ok && result.success) {
-        alert(result.message); // Message Sent Successfully
-        this.reset();
-    } else {
-        alert("Server Error: " + (result.message || "Email Sending Failed"));
-    }
-
-} catch (error) {
-    console.error("Network Error:", error);
-    alert("Network Error: Backend se connect nahi ho pa raha hai.");
-}
-</script>
-
-    
+    });
+    </script>
 </body>
-
 </html>
