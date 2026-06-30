@@ -304,7 +304,7 @@
 <!--javascript-->
 <script>
     document.getElementById("contactForm").addEventListener("submit", async function(e) {
-        // Page ko refresh hone se rokne ke liye
+        // Page ko reload hone se rokne ke liye
         e.preventDefault(); 
 
         const formData = {
@@ -314,31 +314,29 @@
         };
 
         try {
-            const response = await fetch(
-                "https://portfolio-backend-nln8.onrender.com/contact",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(formData)
-                }
-            );
+            // Aapka Formspree endpoint direct link kiya hai
+            const response = await fetch("https://formspree.io/f/xbdvawrb", {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formData)
+            });
 
-            const result = await response.json();
-
-            if (response.ok && result.success) {
-                alert(result.message); 
-                this.reset();
+            if (response.ok) {
+                alert("Message Sent Successfully! Direct aapke email par bhej diya gaya hai."); 
+                this.reset(); // Form clear karne ke liye
             } else {
-                alert("Server Error: " + (result.message || "Email Sending Failed"));
+                const result = await response.json();
+                alert("Server Error: Form submission failed.");
             }
 
         } catch (error) {
             console.error("Network Error:", error);
-            alert("Network Error: Backend se connect nahi ho pa raha hai.");
+            alert("Network Error: Message send nahi ho paya.");
         }
     });
-    </script>
+</script>
 </body>
 </html>
