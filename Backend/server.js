@@ -2,43 +2,43 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
+const nodemailer = require("nodemailer");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
+// Final secure proxy settings jo network block ko override karegi
+const transporter = nodemailer.createTransport({
+    host: "smtp-relay.brevo.com",
+    port: 587,
+    secure: false, // TLS true
+    auth: {
+        user: "b02dce001@smtp-brevo.com",
+        pass: process.env.EMAIL_PASS // Render Dashboard wali key yahan match hogi
+    },
+    tls: {
+        rejectUnauthorized: false // Local networking checks bypass karne ke liye
+    }
+});
+
 app.post("/contact", async (req, res) => {
     const { name, email, message } = req.body;
 
     try {
-        // Brevo ki Transactional Email API ko direct hit karenge (Yeh kabhi block nahi hoti)
-        const response = await fetch("https://api.brevo.com/v3/smtp/email", {
-            method: "POST",
-            headers: {
-                "accept": "application/json",
-                "api-key": process.env.EMAIL_PASS, // Aapki Brevo ki key yahan kaam karegi
-                "content-type": "application/json"
-            },
-            body: JSON.stringify({
-                sender: { name: "Portfolio", email: "narayan.ayush0701@gmail.com" },
-                to: [{ email: "narayan.ayush0701@gmail.com", name: "Ayush" }],
-                subject: `Portfolio Contact From ${name}`,
-                htmlContent: `
-                    <h2>New Message</h2>
-                    <p><b>Name:</b> ${name}</p>
-                    <p><b>Email:</b> ${email}</p>
-                    <p><b>Message:</b></p>
-                    <p>${message}</p>
-                `
-            })
+        await transporter.sendMail({
+            from: "narayan.ayush0701@gmail.com",
+            to: "narayan.ayush0701@gmail.com",
+            subject: `Portfolio Contact From ${name}`,
+            html: `
+                <h2>New Message</h2>
+                <p><b>Name:</b> ${name}</p>
+                <p><b>Email:</b> ${email}</p>
+                <p><b>Message:</b></p>
+                <p>${message}</p>
+            `
         });
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            console.log("Brevo API Error:", errorData);
-            throw new Error("API response was not ok");
-        }
 
         res.json({
             success: true,
@@ -46,7 +46,7 @@ app.post("/contact", async (req, res) => {
         });
 
     } catch (error) {
-        console.log(error);
+        console.log("Mail Engine Error:", error);
         res.status(500).json({
             success: false,
             message: "Email Sending Failed"
@@ -55,11 +55,10 @@ app.post("/contact", async (req, res) => {
 });
 
 app.get("/", (req, res) => {
-    res.send("Backend Running");
+    res.send("Backend Engine Operational");
 });
 
 const PORT = process.env.PORT || 5000;
-
 app.listen(PORT, () => {
-    console.log(`Server Running On Port ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
