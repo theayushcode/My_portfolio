@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 const express = require("express");
 const cors = require("cors");
 
@@ -12,22 +10,21 @@ app.post("/contact", async (req, res) => {
     const { name, email, message } = req.body;
 
     try {
-        // Brevo ki Transactional Email API (Yeh Render par KABHI block nahi hoti)
         const response = await fetch("https://api.brevo.com/v3/smtp/email", {
             method: "POST",
             headers: {
-    "accept": "application/json",
-    "api-key": process.env.EMAIL_PASS, // Agar aap API key use kar rahe hain
-    // AGAR SMTP KEY HAI TOH YE LINE BHI CHAL JAYEGI:
-    "x-sib-api-key": process.env.EMAIL_PASS, 
-    "content-type": "application/json"
-},
+                "accept": "application/json",
+                // Hum yahan dono headers me direct aapki key pass kar rahe hain
+                "api-key": "xsmtpsib-9f20e3d6e2fa0d6ad16b1e83a042b9dc36a2f153cb8679bea613e48f0f7cdf7b-foWQpkTWIQWvwCQm",
+                "x-sib-api-key": "xsmtpsib-9f20e3d6e2fa0d6ad16b1e83a042b9dc36a2f153cb8679bea613e48f0f7cdf7b-foWQpkTWIQWvwCQm",
+                "content-type": "application/json"
+            },
             body: JSON.stringify({
                 sender: { name: "Portfolio", email: "narayan.ayush0701@gmail.com" },
                 to: [{ email: "narayan.ayush0701@gmail.com", name: "Ayush" }],
                 subject: `Portfolio Contact From ${name}`,
                 htmlContent: `
-                    <h2>New Message Received</h2>
+                    <h2>New Message</h2>
                     <p><b>Name:</b> ${name}</p>
                     <p><b>Email:</b> ${email}</p>
                     <p><b>Message:</b></p>
@@ -45,16 +42,12 @@ app.post("/contact", async (req, res) => {
         res.json({ success: true, message: "Message Sent Successfully" });
 
     } catch (error) {
-        console.log("Error Details:", error);
+        console.log(error);
         res.status(500).json({ success: false, message: "Email Sending Failed" });
     }
 });
 
-app.get("/", (req, res) => {
-    res.send("Backend Engine is Online");
-});
+app.get("/", (req, res) => { res.send("Backend Running"); });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`Server Running On Port ${PORT}`);
-});
+app.listen(PORT, () => { console.log(`Server Running`); });
