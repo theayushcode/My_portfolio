@@ -16,10 +16,12 @@ app.post("/contact", async (req, res) => {
         const response = await fetch("https://api.brevo.com/v3/smtp/email", {
             method: "POST",
             headers: {
-                "accept": "application/json",
-                "api-key": process.env.EMAIL_PASS, // Render dashboard se key uthayega
-                "content-type": "application/json"
-            },
+    "accept": "application/json",
+    "api-key": process.env.EMAIL_PASS, // Agar aap API key use kar rahe hain
+    // AGAR SMTP KEY HAI TOH YE LINE BHI CHAL JAYEGI:
+    "x-sib-api-key": process.env.EMAIL_PASS, 
+    "content-type": "application/json"
+},
             body: JSON.stringify({
                 sender: { name: "Portfolio", email: "narayan.ayush0701@gmail.com" },
                 to: [{ email: "narayan.ayush0701@gmail.com", name: "Ayush" }],
